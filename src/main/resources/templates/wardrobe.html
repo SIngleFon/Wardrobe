@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Шкаф</title>
+    <link rel="stylesheet" th:href="@{/css/reset.css}">
+    <link rel="stylesheet" th:href="@{/css/main.css}">
+    <link rel="stylesheet" th:href="@{/css/header.css}">
+    <link rel="stylesheet" th:href="@{/css/auth.css}">
+    <link rel="stylesheet" th:href="@{/css/lk_ward.css}">
+
+    <script defer th:src="@{/js/modernizr.js}"></script>
+    <script defer th:src="@{/js/main.js}"></script>
+    <script defer th:src="@{/js/auth.js}"></script>
+    <script defer th:src="@{/js/wardrobe.js}"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+
+</head>
+<body>
+<div class="backgr">
+    <header id="header" class="container">
+        <span class="logo"><a href="javascript:void(0);" onclick="history.back();">Назад</a></span>
+        <!-- Фильтр -->
+        <nav class="filt_search">
+            <div class="search">
+                <label for="searchInput"></label><input type="text" id="searchInput" placeholder="Поиск...">
+                <button id="searchButton">Искать</button>
+            </div>
+            <div class="filter">
+                <select id="typeFilter">
+                    <option hidden>По типу</option>
+                    <option value="upperwear">Верхняя одежда</option>
+                    <option value="accessory">Аксессуары</option>
+                    <option value="bottomwear">Нижняя одежда</option>
+                    <option value="footwear">Обувь</option>
+                    <option value="clothing">Одежда</option>
+                </select>
+                <select id="colorFilter">
+                    <option hidden>По цвету</option>
+                    <option value="красный">Красный</option>
+                    <option value="СИНИЙ">Синий</option>
+                    <option value="ЗЕЛЕНЫЙ">Зеленый</option>
+                    <option value="ЖЁЛТЫЙ">Желтый</option>
+                    <option value="ОРАНЖЕВЫЙ">Оранжевый</option>
+                    <option value="ФИОЛЕТОВЫЙ">Фиолетовый</option>
+                    <option value="ЧЁРНЫЙ">Черный</option>
+                    <option value="БЕЛЫЙ">Белый</option>
+                    <option value="СЕРЫЙ">Серый</option>
+                    <option value="КОРИЧНЕВЫЙ">Коричневый</option>
+                    <option value="РОЗОВЫЙ">Розовый</option>
+                    <option value="ДРУГОЙ">Другой</option>
+                </select>
+                <select id="seasonFilter">
+                    <option hidden>По сезону</option>
+                    <option value="ЗИМА">Зима</option>
+                    <option value="ВЕСНА">Весна</option>
+                    <option value="ЛЕТО">Лето</option>
+                    <option value="ОСЕНЬ">Осень</option>
+                </select>
+                <button id="resetFiltersButton">Сбросить</button>
+            </div>
+        </nav>
+
+    </header>
+
+<ul class="cards" id="items"></ul>
+    <div id="editModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div class="imageContainer">
+                <img class="itemImage" src="https://business-click.it/images/portfolio/cappelledelcommiatofirenze.png" alt="Элемент">
+                <input type="file" id="editImageInput" style="display: none;">
+                <button class="changeImageButton">Изменить изображение</button>
+            </div>
+
+            <form id="editForm">
+                <div class="selectedColors"></div>
+                <label for="newItemColor">Цвет:</label>
+                <select class="newItemColor" name="color">
+                    <option value="">Выберите цвет</option>
+                    <option value="КРАСНЫЙ">Красный</option>
+                    <option value="СИНИЙ">Синий</option>
+                    <option value="ЗЕЛЕНЫЙ">Зеленый</option>
+                    <option value="ЖЁЛТЫЙ">Желтый</option>
+                    <option value="ОРАНЖЕВЫЙ">Оранжевый</option>
+                    <option value="ФИОЛЕТОВЫЙ">Фиолетовый</option>
+                    <option value="ЧЁРНЫЙ">Черный</option>
+                    <option value="БЕЛЫЙ">Белый</option>
+                    <option value="СЕРЫЙ">Серый</option>
+                    <option value="КОРИЧНЕВЫЙ">Коричневый</option>
+                    <option value="РОЗОВЫЙ">Розовый</option>
+                    <option value="ДРУГОЙ">Другой</option>
+                </select>
+                <label for="newItemSeason">Сезон:</label>
+                <select class="newItemSeason" name="season">
+                    <option value="">Выберите сезон</option>
+                    <option value="ЗИМА">Зима</option>
+                    <option value="ВЕСНА">Весна</option>
+                    <option value="ЛЕТО">Лето</option>
+                    <option value="ОСЕНЬ">Осень</option>
+                </select>
+                <!-- Другие поля редактирования элемента, если необходимо -->
+                <label for="editItemDescription">Описание:</label>
+                <input type="text" id="editItemDescription" name="description" maxlength="100" required>
+                <button type="submit" id="saveEditButton">Сохранить</button>
+                <button type="submit" id="deleteButton">Удалить предмет</button>
+                <div class="editItemFields clothingFields" style="display: none;">
+                    <label for="newItemMaterial">Материал:</label>
+                    <select class="newItemMaterial" name="material">
+                        <option value="">Выберите материал</option>
+                        <!-- Добавляем значения из EnumComposition -->
+                        <option value="ХЛОПОК">Хлопок</option>
+                        <option value="ЛЕН">Лен</option>
+                        <option value="БАМБУК">Бамбук</option>
+                        <option value="ДЖУТ">Джут</option>
+                        <option value="ПЕНЬКА">Пенька</option>
+                        <option value="ШЕРСТЬ">Шерсть</option>
+                        <option value="ШЕЛК">Шелк</option>
+                        <option value="КАШЕМИР">Кашемир</option>
+                        <option value="МОХЕР">Мохер</option>
+                        <option value="АНГОРА">Ангора</option>
+                        <option value="ПОЛИЭСТЕР">Полиэстер</option>
+                        <option value="НЕЙЛОН">Нейлон</option>
+                        <option value="АКРИЛ">Акрил</option>
+                        <option value="ВИСКОЗА">Вискоза</option>
+                        <option value="АЦЕТАТ">Ацетат</option>
+                        <option value="ЛАЙКРА">Лайкра</option>
+                        <option value="СПАНДЕКС">Спандекс</option>
+                    </select>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+
+<div id="createItemModal" class="modal" style="display: none;">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <div class="imageContainer">
+            <img class="itemImage" src="https://business-click.it/images/portfolio/cappelledelcommiatofirenze.png" alt="Элемент">
+            <input type="file" id="createImageInput" style="display: none;">
+            <button class="changeImageButton">Изменить изображение</button>
+        </div>
+
+        <form id="createItemForm" enctype="multipart/form-data">
+            <label for="newItemType">Тип:</label>
+            <select id="newItemType" name="type" required>
+                <option value="">Выберите тип</option>
+                <option value="UPPERWEAR">Верхняя одежда</option>
+                <option value="ACCESSORY">Аксессуары</option>
+                <option value="BOTTOMWEAR">Нижняя одежда</option>
+                <option value="FOOTWEAR">Обувь</option>
+                <option value="CLOTHING">Одежда</option>
+            </select>
+
+            <div id="selectedColors"></div>
+            <label for="newItemColor">Цвет:</label>
+            <select id="newItemColor" name="color" >
+                <option value="">Выберите цвет</option>
+                <option value="КРАСНЫЙ">Красный</option>
+                <option value="СИНИЙ">Синий</option>
+                <option value="ЗЕЛЕНЫЙ">Зеленый</option>
+                <option value="ЖЁЛТЫЙ">Желтый</option>
+                <option value="ОРАНЖЕВЫЙ">Оранжевый</option>
+                <option value="ФИОЛЕТОВЫЙ">Фиолетовый</option>
+                <option value="ЧЁРНЫЙ">Черный</option>
+                <option value="БЕЛЫЙ">Белый</option>
+                <option value="СЕРЫЙ">Серый</option>
+                <option value="КОРИЧНЕВЫЙ">Коричневый</option>
+                <option value="РОЗОВЫЙ">Розовый</option>
+                <option value="ДРУГОЙ">Другой</option>
+
+                <!-- Добавьте другие цвета по вашему выбору -->
+            </select>
+            <label for="newItemSeason">Сезон:</label>
+            <select id="newItemSeason" name="seasonUpperwear">
+                <option value="">Выберите сезон</option>
+                <option value="ЗИМА">Зима</option>
+                <option value="ВЕСНА">Весна</option>
+                <option value="ЛЕТО">Лето</option>
+                <option value="ОСЕНЬ">Осень</option>
+            </select>
+            <label for="newItemDescription">Описание:</label>
+            <input type="text" id="newItemDescription" name="description" maxlength="100" required>
+
+            <!-- Дополнительные поля для верхней одежды -->
+            <div id="upperwearFields" style="display: none;">
+
+            </div>
+
+            <!-- Дополнительные поля для аксессуаров -->
+            <div id="accessoryFields" style="display: none;">
+
+            </div>
+
+            <!-- Дополнительные поля для нижней одежды -->
+            <div id="bottomwearFields" style="display: none;">
+
+            </div>
+
+            <!-- Дополнительные поля для обуви -->
+            <div id="footwearFields" style="display: none;">
+
+            </div>
+
+            <!-- Дополнительные поля для одежды -->
+            <div id="clothingFields" style="display: none;">
+                <div id="selectedMaterials"></div>
+                <label for="newItemMaterial">Материал:</label>
+                <select id="newItemMaterial" name="material">
+                    <option value="">Выберите материал</option>
+                    <!-- Добавляем значения из EnumComposition -->
+                    <option value="ХЛОПОК">Хлопок</option>
+                    <option value="ЛЕН">Лен</option>
+                    <option value="БАМБУК">Бамбук</option>
+                    <option value="ДЖУТ">Джут</option>
+                    <option value="ПЕНЬКА">Пенька</option>
+                    <option value="ШЕРСТЬ">Шерсть</option>
+                    <option value="ШЕЛК">Шелк</option>
+                    <option value="КАШЕМИР">Кашемир</option>
+                    <option value="МОХЕР">Мохер</option>
+                    <option value="АНГОРА">Ангора</option>
+                    <option value="ПОЛИЭСТЕР">Полиэстер</option>
+                    <option value="НЕЙЛОН">Нейлон</option>
+                    <option value="АКРИЛ">Акрил</option>
+                    <option value="ВИСКОЗА">Вискоза</option>
+                    <option value="АЦЕТАТ">Ацетат</option>
+                    <option value="ЛАЙКРА">Лайкра</option>
+                    <option value="СПАНДЕКС">Спандекс</option>
+                </select>
+            </div>
+
+            <button type="submit" id="submitNewItemButton">Создать</button>
+        </form>
+    </div>
+</div>
+
+
+
+
+
+
+</div>
+
+<button id="openCreateItemModalButton" class="create-item-button"></button>
+
+
+</body>
+</html>
+
+
+

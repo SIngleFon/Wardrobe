@@ -1,0 +1,364 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&family=Poppins:ital,wght@0,400;1,800&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: "Poppins", sans-serif;
+    font-weight: 400;
+    max-width: 100%;
+    background: rgb(157,255,239);
+    background: linear-gradient(90deg, rgba(157,255,239,1) 35%, rgba(255,255,255,1) 100%);
+    padding-top: 100px;
+}
+
+a {
+    text-decoration: none;
+}
+
+img {
+    max-width: 100%;
+}
+
+div img {
+    width: 300px;
+    height: 300px;
+    bottom: 0px;
+    /* right: 0; */
+    opacity: 35%;
+}
+
+div h1 {
+    margin-top: 10030px;
+}
+
+/* --------------------------- */
+.backgr {
+  padding-top: 100px; /* Добавим отступ сверху, чтобы не перекрывать шапку */
+}
+
+
+:root {
+  --surface-color: #fff;
+  --curve: 10;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Noto Sans JP', sans-serif;
+  background-color: #fef8f8;
+  margin: 0;
+  padding: 0;
+}
+
+
+/* ========================*/
+.wardrobes-container, .items-container {
+  width: max;
+  gap: 30px; /* Отступы между элементами */
+  justify-content: center;
+  padding: 2rem;
+  list-style-type: none;
+  margin: 30px;
+  justify-content: space-between;
+}
+#items{
+    max-width: auto;
+    margin: 30px 60px;
+}
+
+.wardrobe-card, .item-card {
+  border-radius: 30px;
+  position: relative;
+  width: 370px;
+  height: 370px;
+  overflow: hidden;
+  background-color: var(--surface-color);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  display: inline-block;
+  right: 0;
+  margin: 30px;
+
+}
+
+.wardrobe-link, .item-link {
+  display: block;
+  width: 100%;
+  height: 100%;
+  text-decoration: none;
+  color: inherit;
+  position: relative;
+
+}
+
+.wardrobe__image, .item__image {
+  width: 100%;
+  height: 400px;
+  object-fit: cover;
+  position: absolute;
+  top: 0;
+  left: 0;
+
+}
+
+.edit-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  z-index: 10;
+}
+
+.edit-button img {
+  width: 24px;
+  height: 24px;
+}
+
+.wardrobe__title, .item__details {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 100px;
+  display: flex;
+  align-items: left;
+  justify-content: center;
+  border-top-right-radius: 30px;
+  border-bottom-left-radius: 30px;
+  padding: 0.5rem;
+  text-align: left;
+  font-size: 20px;
+  box-shadow: 7px -6px 17px 1px #bedbe1;
+  color: #6A515E;
+  background: linear-gradient(0deg, rgba(141,255,254,1) 0%, rgba(255,255,255,1) 60%);
+
+}
+.wardrobe__title {
+    font-size: 35px;
+}
+.item-card {
+  height: 600px;
+}
+
+.item__image {
+  height: 450px;
+}
+
+.item__details {
+  height: 150px;
+  flex-direction: column;
+}
+
+.item__title {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+
+
+.item-card:hover .item__details {
+  height: 250px; /* Устанавливаем желаемую высоту при наведении */
+}
+
+
+/* Модальное окно */
+.modal {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed; /* Изменено на fixed */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Прозрачный фон для затемнения */
+    z-index: 9999; /* Убедитесь, что модальное окно находится поверх других элементов */
+}
+
+/* Контент модального окна */
+.modal-content {
+    background-color: #fefefe; /* Белый фон */
+        padding: 20px;
+        border-radius: 10px; /* Скругление углов */
+        width: 600px;
+        max-width: 90%; /* Максимальная ширина 90% от ширины экрана */
+        max-height: 90%; /* Максимальная высота 90% от высоты экрана */
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Тень для модального окна */
+        overflow: auto; /* Добавить прокрутку, если содержимое не помещается */
+        box-sizing: border-box;
+        margin: auto; /* Центрирование */
+        transform: translate(-50%, -50%); /* Центрирование */
+        position: absolute; /* Позиционирование */
+        top: 50%; /* Центрирование */
+        left: 50%; /* Центрирование */
+}
+
+/* Закрытие модального окна */
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* Поля формы */
+label {
+    margin-bottom: 10px;
+    display: block;
+    align-items: center;
+}
+
+
+
+/* Кнопка "Сохранить" */
+#saveButton {
+    background-color: #4CAF50; /* Зеленый цвет */
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+#saveButton:hover {
+    background-color: #45a049; /* Темно-зеленый цвет при наведении */
+}
+
+/* ДОБАВИТЬ ШКАФ */
+.create-wardrobe-button {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 60px;
+    height: 60px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.create-wardrobe-button span {
+    display: none;
+}
+
+.create-wardrobe-button::before {
+    content: '+';
+    font-size: 36px;
+    line-height: 60px;
+    text-align: center;
+}
+
+.create-wardrobe-button:hover {
+    background-color: #d32f2f;
+}
+
+/* АЙТЕМ */
+.create-item-button {
+    position: fixed;
+    bottom: 20px;
+    right: 25px;
+    width: 60px;
+    height: 60px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.create-item-button span {
+    display: none;
+}
+
+.create-item-button::before {
+    content: '+';
+    font-size: 36px;
+    line-height: 60px;
+    text-align: center;
+}
+
+.create-item-button:hover {
+    background-color: #d32f2f;
+}
+
+.project-story {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.project-story h2 {
+    color: #333;
+    font-size: 24px;
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+.project-story p {
+    line-height: 1.6;
+    margin-bottom: 15px;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.5);
+}
+
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+#contactModal .modal-content {
+  font-size: 25px; /* Увеличиваем размер шрифта */
+}
+
+.contact-link {
+  color: blue; /* Цвет текста */
+  text-decoration: none; /* Убираем подчеркивание */
+  margin-bottom: 15px; /* Добавляем небольшое расстояние между ссылками */
+}
+
+.contact-link:hover {
+  text-decoration: underline; /* Подчеркиваем при наведении */
+  color: darkblue; /* Изменяем цвет при наведении */
+}
+
+

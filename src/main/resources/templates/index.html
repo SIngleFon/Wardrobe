@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Мой гардероб</title>
+    <link rel="stylesheet" th:href="@{/css/reset.css}">
+    <link rel="stylesheet" th:href="@{/css/main.css}">
+    <link rel="stylesheet" th:href="@{/css/header.css}">
+    <link rel="stylesheet" th:href="@{/css/auth.css}">
+    <script defer th:src="@{/js/modernizr.js}"></script>
+    <script defer th:src="@{/js/main.js}"></script>
+    <script defer th:src="@{/js/auth.js}"></script>
+
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+
+</head>
+<body>
+<div id="registration-message" class="registration-message" th:if="${message}" th:text="${message}"></div>
+<div id="login-error-message" class="error-message" style="display: none;">Ошибка. Проверьте корректность логина и пароля.</div>
+
+
+<div class="backgr">
+    <header id="header" class="container">
+        <span class="logo"><a th:href="@{index}">Мой Гардероб</a></span>
+        <nav>
+            <ul class="cd-switcher">
+                <li class="active"><a th:href="@{#}">Home</a></li>
+                <!-- Кнопки "Войти" и "Кабинет" -->
+                <li id="loginBtn"><a th:href="@{##}" class="trigger">Войти</a></li>
+                <li id="profileBtn" style="display: none;">
+                    <a th:href="@{##}" class="btn profile-btn">Кабинет</a>
+                    <!-- Выплывающее меню кнопки "Кабинет" -->
+                    <ul class="profile-menu">
+                        <li><a th:href="@{'/'+${username}/lk}" class="profile-link">Личный кабинет</a></li>
+                        <li><a th:href="@{#}" class="logout-link">Выйти</a></li>
+                    </ul>
+                </li>
+                <li><a href="#" class="btn" id="contactBtn">Контакты</a></li>
+            </ul>
+        </nav>
+    </header>
+    <div id="contactModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Связаться со мной:</h2>
+            <p>Телефон: +79681939448</p>
+            <p>Email: timur5356@mail.ru</p>
+            <p>TG: <a href="https://t.me/SingleFon" class="contact-link">Click me</a></p>
+            <p>Git: <a href="https://github.com/SingleFon" class="contact-link">Click me</a></p>
+            <p>VK: <a href="https://vk.com/singlefon" class="contact-link">Click me</a></p>
+            <p>Однаклассники: <a href="https://www.youtube.com/watch?v=LbOve_UZZ54" class="contact-link">Вы серьезно?</a> ;D</p>
+            <!-- Добавьте свои контактные данные здесь -->
+        </div>
+    </div>
+    <div class="cd-user-modal" th:fragment="modal-form">
+        <div class="cd-user-modal-container"> <!-- this is the container wrapper -->
+            <ul class="cd-switcher">
+                <li><a th:href="@{#0}">Sign in</a></li>
+                <li><a th:href="@{#0}">New account</a></li>
+            </ul>
+
+            <div id="cd-login">
+                <form id="formLogin" class="cd-form" action="/login" method="post">
+                    <p class="fieldset">
+                        <label class="image-replace cd-username" for="signin-username">E-mail</label>
+                        <input class="full-width has-padding has-border" id="signin-username" type="text" placeholder="Username" name="username">
+                        <span class="cd-error-message">Error message here!</span>
+                    </p>
+                    <p class="fieldset">
+                        <label class="image-replace cd-password" for="signin-password">Password</label>
+                        <input class="full-width has-padding has-border" id="signin-password" type="password" placeholder="Password" name="password">
+                        <a href="#" class="hide-password">Hide</a>
+                        <span class="cd-error-message">Error message here!</span>
+                    </p>
+                    <p class="fieldset">
+                        <input type="checkbox" id="remember-me" checked>
+                        <label for="remember-me">Remember me</label>
+                    </p>
+                    <p class="fieldset">
+                        <input class="full-width" type="submit" value="Login">
+                    </p>
+                </form>
+                <p class="cd-form-bottom-message"><a href="#">Forgot your password?</a></p>
+                <a href="#" class="cd-close-form">Close</a>
+            </div>
+
+            <div id="cd-signup">
+                <form id="formSignup" class="cd-form" action="/register" method="post">
+                    <p class="fieldset">
+                        <label class="image-replace cd-username" for="signup-username">Username</label>
+                        <input class="full-width has-padding has-border" id="signup-username" type="text" placeholder="Username" name="name" minlength="6" pattern="[a-zA-Z]+" title="Username must be at least 6 characters long and contain only English letters (a-z, A-Z)" required>
+                        <span class="cd-error-message" id="username-error">Имя пользователя должно содержать не менее 6 символов и состоять только из английских букв.</span>
+                    </p>
+
+                    <p class="fieldset">
+                        <label class="image-replace cd-email" for="signup-email">E-mail</label>
+                        <input class="full-width has-padding has-border" id="signup-email" type="email" placeholder="E-mail" name="email" required>
+                        <span class="cd-error-message" id="email-error">Пожалуйста, введите действительный адрес электронной почты.</span>
+                    </p>
+
+                    <p class="fieldset">
+                        <label class="image-replace cd-password" for="signup-password">Password</label>
+                        <input class="full-width has-padding has-border" id="signup-password" type="text" placeholder="Password" name="password" minlength="8" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\da-zA-Z]).{8,}$" required>
+                        <a href="#" class="hide-password">Hide</a>
+                        <span class="cd-error-message" id="password-error">Пароль должен содержать не менее 8 символов и содержать как минимум одну строчную букву, одну заглавную букву, одну цифру и один специальный символ..</span>
+                    </p>
+
+                    <p class="fieldset">
+                        <input type="checkbox" id="accept-terms" required>
+                        <label for="accept-terms">I agree to the <a href="#">Terms</a></label>
+                    </p>
+
+                    <p class="fieldset">
+                        <input class="full-width has-padding" type="submit" value="Create account">
+                    </p>
+                </form>
+            </div>
+
+            <div th:id="cd-reset-password"> <!-- reset password form -->
+                <p class="cd-form-message">Вы потеряли пароль? Пожалуйста, введите свой адрес электронной почты. Вы получите ссылку для создания нового пароля.</p>
+
+                <form class="cd-form">
+                    <p class="fieldset">
+                        <label class="image-replace cd-email" th:for="reset-email">E-mail</label>
+                        <input class="full-width has-padding has-border" th:id="reset-email" type="email" placeholder="E-mail">
+                        <span class="cd-error-message">Error message here!</span>
+                    </p>
+
+                    <p class="fieldset">
+                        <input class="full-width has-padding" type="submit" value="Reset password">
+                    </p>
+                </form>
+
+                <p class="cd-form-bottom-message"><a th:href="@{#0}">Вернуться к авторизации</a></p>
+            </div> <!-- cd-reset-password -->
+            <a th:href="@{#0}" class="cd-close-form">Close</a>
+        </div> <!-- cd-user-modal-container -->
+
+    </div>
+
+
+
+    <div class="project-story">
+        <h2>Я решил создать веб-приложение для организации гардероба.</h2>
+        <p>Идея пришла ко мне, когда я столкнулся с проблемой организации своей одежды и поиска подходящих нарядов
+            для различных случаев.</p>
+        <h2>Планирование проекта:</h2>
+        <p>Сначала я провел небольшое исследование, чтобы понять, какие функции и возможности должно иметь приложение.
+            Я создал список функций, который включал в себя управление гардеробом, категоризацию одежды, возможность
+            добавления фотографий, учет цветов, сезонов и материалов.</p>
+        <h2>Выбор технологий:</h2>
+        <p>После этого я выбрал технологии для разработки. Я решил использовать Java для backend-разработки с использованием
+            фреймворка Spring Boot, так как он обеспечивает быструю разработку и удобное управление зависимостями.
+            Для frontend-разработки я использовал HTML, CSS и JavaScript.</p>
+        <h2>Разработка архитектуры:</h2>
+        <p>Затем я разработал общую архитектуру приложения. Я решил использовать клиент-серверную архитектуру,
+            где клиентская часть будет написана на HTML, CSS и JavaScript, а серверная часть на Java с использованием
+            Spring Boot.</p>
+        <h2>Начало разработки:</h2>
+        <p>Первым шагом было создание базового макета HTML страницы с использованием Thymeleaf для шаблонизации.
+            Я разбил страницу на различные компоненты, такие как заголовок, навигационное меню,
+            формы входа и регистрации, основной контент и т.д.</p>
+        <h2>Добавление функциональности:</h2>
+        <p>Постепенно я добавлял функциональность к приложению. Я начал с реализации аутентификации и авторизации
+            пользователей, затем перешел к управлению гардеробом, добавлению новых предметов одежды и категоризации
+            их по различным параметрам.</p>
+        <h2>Поддержка и дальнейшее развитие:</h2>
+        <p>После развертывания приложения я продолжил поддерживать его, реагируя на обратную связь пользователей и
+            исправляя обнаруженные ошибки. Кроме того, я постепенно добавлял новые функции и улучшал существующие на
+            основе обратной связи и собственных идей.</p>
+
+    </div>
+</div>
+</body>
+</html>

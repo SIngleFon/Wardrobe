@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Шкаф</title>
+    <link rel="stylesheet" th:href="@{/css/reset.css}">
+    <link rel="stylesheet" th:href="@{/css/main.css}">
+    <link rel="stylesheet" th:href="@{/css/header.css}">
+    <link rel="stylesheet" th:href="@{/css/auth.css}">
+    <script defer th:src="@{/js/modernizr.js}"></script>
+    <script defer th:src="@{/js/main.js}"></script>
+    <script defer th:src="@{/js/auth.js}"></script>
+    <script defer th:src="@{/js/script.js}"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+
+</head>
+<body>
+<h1>Шкаф</h1>
+<ul class="cards" id="items"></ul>
+<div id="createItemModal" class="modal" style="display: none;">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <div class="imageContainer">
+            <img class="itemImage" src="https://business-click.it/images/portfolio/cappelledelcommiatofirenze.png" alt="Элемент">
+            <button class="changeImageButton">Изменить изображение</button>
+        </div>
+        <form id="createItemForm">
+            <label for="newItemDescription">Описание:</label>
+            <input type="text" id="newItemDescription" name="description" maxlength="100" required>
+
+            <label for="newItemType">Тип:</label>
+            <select id="newItemType" name="type" required>
+                <option value="">Выберите тип</option>
+                <option value="UPPERWEAR">Верхняя одежда</option>
+                <option value="ACCESSORY">Аксессуары</option>
+                <option value="BOTTOMWEAR">Нижняя одежда</option>
+                <option value="FOOTWEAR">Обувь</option>
+                <option value="CLOTHING">Одежда</option>
+            </select>
+
+            <!-- Дополнительные поля для верхней одежды -->
+            <div id="upperwearFields" style="display: none;">
+                <label for="newItemSeasonUpperwear">Сезон:</label>
+                <select id="newItemSeasonUpperwear" name="seasonUpperwear" required>
+                    <option value="">Выберите сезон</option>
+                    <option value="WINTER">Зима</option>
+                    <option value="SPRING">Весна</option>
+                    <option value="SUMMER">Лето</option>
+                    <option value="FALL">Осень</option>
+                </select>
+            </div>
+
+            <!-- Дополнительные поля для аксессуаров -->
+            <div id="accessoryFields" style="display: none;">
+                <label for="newItemSeasonAccessory">Сезон:</label>
+                <select id="newItemSeasonAccessory" name="seasonAccessory" required>
+                    <option value="">Выберите сезон</option>
+                    <option value="WINTER">Зима</option>
+                    <option value="SPRING">Весна</option>
+                    <option value="SUMMER">Лето</option>
+                    <option value="FALL">Осень</option>
+                </select>
+            </div>
+
+            <!-- Дополнительные поля для нижней одежды -->
+            <div id="bottomwearFields" style="display: none;">
+                <label for="newItemSeasonBottomwear">Сезон:</label>
+                <select id="newItemSeasonBottomwear" name="seasonBottomwear" required>
+                    <option value="">Выберите сезон</option>
+                    <option value="WINTER">Зима</option>
+                    <option value="SPRING">Весна</option>
+                    <option value="SUMMER">Лето</option>
+                    <option value="FALL">Осень</option>
+                </select>
+            </div>
+
+            <!-- Дополнительные поля для обуви -->
+            <div id="footwearFields" style="display: none;">
+                <label for="newItemSeasonFootwear">Сезон:</label>
+                <select id="newItemSeasonFootwear" name="seasonFootwear" required>
+                    <option value="">Выберите сезон</option>
+                    <option value="WINTER">Зима</option>
+                    <option value="SPRING">Весна</option>
+                    <option value="SUMMER">Лето</option>
+                    <option value="FALL">Осень</option>
+                </select>
+            </div>
+
+            <!-- Дополнительные поля для одежды -->
+            <div id="clothingFields" style="display: none;">
+                <label for="newItemSeasonClothing">Сезон:</label>
+                <select id="newItemSeasonClothing" name="seasonClothing" required>
+                    <option value="">Выберите сезон</option>
+                    <option value="WINTER">Зима</option>
+                    <option value="SPRING">Весна</option>
+                    <option value="SUMMER">Лето</option>
+                    <option value="FALL">Осень</option>
+                </select>
+
+                <label for="newItemMaterial">Материал:</label>
+                <input type="text" id="newItemMaterial" name="material" required>
+            </div>
+            <button type="submit" id="submitNewItemButton">Создать</button>
+        </form>
+    </div>
+</div>
+<button id="openCreateItemModalButton" class="create-item-button">Добавить элемент</button>
+
+</body>
+</html>

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Личный Кабинет</title>
+    <link rel="stylesheet" th:href="@{/css/reset.css}">
+    <link rel="stylesheet" th:href="@{/css/main.css}">
+    <link rel="stylesheet" th:href="@{/css/header.css}">
+    <link rel="stylesheet" th:href="@{/css/auth.css}">
+    <link rel="stylesheet" th:href="@{/css/lk_ward.css}">
+    <script defer th:src="@{/js/modernizr.js}"></script>
+    <script defer th:src="@{/js/main.js}"></script>
+    <script defer th:src="@{/js/auth.js}"></script>
+    <script defer th:src="@{/js/lk.js}"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+</head>
+<body>
+<div class="backgr">
+    <header id="header" class="container">
+        <span class="logo"><a th:href="@{/index}">Мой Гардероб</a></span>
+        <nav>
+            <ul class="cd-switcher">
+
+                    <!-- Выплывающее меню кнопки "Кабинет" -->
+                    <li id="profileBtn" class="profile" style="display: none;">
+                        <a th:href="@{#}" class="btn profile-btn"><span th:text="${username}"></span></a>
+                        <ul class="profile-menu">
+                            <li><a th:href="@{#}" class="logout-link">Выйти</a></li>
+                        </ul>
+                    </li>
+            </ul>
+        </nav>
+    </header>
+
+
+    <ul class="wardrobes-container" id="wardrobes"></ul>
+    <button id="createWardrobeButton" class="create-wardrobe-button">
+        <span>Создать новый шкаф</span>
+    </button>
+
+    <div id="editModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div class="imageContainer">
+                <img class="wardrobeImage" src="https://business-click.it/images/portfolio/cappelledelcommiatofirenze.png" alt="Шкаф">
+                <input type="file" id="editImageInput" style="display: none;">
+                <button class="changeImageButton">Изменить изображение</button>
+            </div>
+            <form id="editForm">
+                <label for="wardrobeName">Название:</label>
+                <input type="text" id="wardrobeName" name="name" maxlength="15" required>
+                <button type="submit" id="saveButton">Сохранить</button>
+            </form>
+            <button type="submit" id="deleteButton">Удалить шкаф</button>
+        </div>
+    </div>
+
+    <div id="createModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div class="imageContainer">
+                <img class="wardrobeImage" src="https://business-click.it/images/portfolio/cappelledelcommiatofirenze.png" alt="Шкаф">
+                <input type="file" id="createImageInput" style="display: none;">
+                <button class="changeImageButton">Изменить изображение</button>
+            </div>
+            <form id="createForm" enctype="multipart/form-data">
+                <label for="newWardrobeName">Новый шкаф:</label>
+                <input type="text" id="newWardrobeName" name="name" maxlength="25" required>
+                <!-- Одно поле ввода для изображения -->
+                <button type="submit" id="createButton">Создать</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
