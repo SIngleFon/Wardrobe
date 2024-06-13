@@ -80,18 +80,17 @@ public class WardrobeController {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body("You are not authorized to update this wardrobe");
         }
 
-        // Получаем старый imageUrl
-        String oldImageUrl = wardrobe.getImageUrl();
-
         // Обновляем данные шкафа
         wardrobe.setName(updatedWardrobe.getName());
 
+        // Обработка нового изображения предмета
+        String oldImageUrl = wardrobe.getImageUrl();
         if (image != null && !image.isEmpty()) {
             // Сохраняем новое изображение
             String newImageUrl = fileStorageService.storeFile(image);
             wardrobe.setImageUrl(newImageUrl);
 
-            // Если старый imageUrl существует, удаляем его
+            // Удаляем старое изображение, если оно существует
             if (oldImageUrl != null && !oldImageUrl.equals("https://business-click.it/images/portfolio/cappelledelcommiatofirenze.png")) {
                 fileStorageService.deleteFile(oldImageUrl);
             }
@@ -159,7 +158,11 @@ public class WardrobeController {
         if (!wardrobe.getAccount().getUsername().equals(username)) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body("You are not authorized to delete this wardrobe");
         }
-
+        // Удаляем изображение предмета, если оно не является ссылкой по умолчанию
+        String oldImageUrl = wardrobe.getImageUrl();
+        if (oldImageUrl != null && !oldImageUrl.equals("https://business-click.it/images/portfolio/cappelledelcommiatofirenze.png")) {
+            fileStorageService.deleteFile(oldImageUrl);
+        }
         wardrobeService.deleteById(wardrobe.getId());
 
         return ResponseEntity.ok("Wardrobe deleted successfully");
